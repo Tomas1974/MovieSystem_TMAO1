@@ -40,6 +40,8 @@ public class NewMovieController extends BaseController implements Initializable 
     @FXML
     private TextField txtMovieFilePath, txtImageFilePath, txtImdbRating,txtMovieTitle,txtUserRating;
 
+    private boolean movieOk=false,pictureOk=false;
+
     //Initialize method that opens up the window and feeds data to the table-vies.
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -112,7 +114,7 @@ public class NewMovieController extends BaseController implements Initializable 
                     catMovieModel.addMovieToCategory(movie ,categories);
                 }
 
-                if (closeOK) //Da filmen er gemt, kan vi godt lukke vinduet.
+                if (closeOK && movieOk && pictureOk) //Da filmen er gemt, kan vi godt lukke vinduet.
                 {
                     Stage stage = (Stage) addMovie.getScene().getWindow();
                     stage.close();
@@ -142,6 +144,7 @@ public class NewMovieController extends BaseController implements Initializable 
         if (f != null)
         if (f.getPath().endsWith(".jpg") || f.getPath().endsWith(".png")) {
             txtImageFilePath.setText(f.getPath());
+            pictureOk=true;
         }
         else{
             mainController.informationUser("Your file needs to be in jpg or png format");
@@ -161,6 +164,7 @@ public class NewMovieController extends BaseController implements Initializable 
         if (f != null)
         if (f.getPath().endsWith(".mp4") || f.getPath().endsWith("mpeg4")) {
             txtMovieFilePath.setText(f.getPath());
+            movieOk=true;
         }
         else{
             mainController.informationUser("Your file needs to be in mp4 or mpeg4 format");

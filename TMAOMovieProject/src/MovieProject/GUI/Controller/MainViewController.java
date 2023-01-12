@@ -33,6 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 //import static sun.jvm.hotspot.debugger.windbg.WindbgDebuggerLocal.imagePath;
 
@@ -82,6 +83,7 @@ public class MainViewController extends BaseController implements Initializable 
         listenerMovieList();
         mouseListenerCategories();
         listenerCategoryList();
+
 
     }
 
@@ -165,6 +167,8 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     public void listenerMovieList() {
+
+
         MovieTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
 
         {
@@ -236,6 +240,7 @@ public class MainViewController extends BaseController implements Initializable 
     @Override
     public void setup() {
 
+
     }
 
     // Opens a new window where you can add a new category to the category table
@@ -257,16 +262,29 @@ public class MainViewController extends BaseController implements Initializable 
 
     public void playVideo(String moviePath) throws IOException {
         boolean filesExits = Files.exists(Path.of(moviePath)); //check om filen eksisterer
+        File file = new File(moviePath);
+
+        try {
+
         if (filesExits) {
-            File file = new File(moviePath);
-            Desktop desktop = Desktop.getDesktop();
+
+                Desktop desktop = Desktop.getDesktop();
+
+            movieModel.updateMovieLastview(movie);
+            MovieTableView.setItems(movieModel.showList());
+
             if (file.exists()) desktop.open(file);
         } else
             informationUser("File do not exist!");
             // Her kaldes en metode, der viser et vindue med besked om, at filen ikke findes.
             // Text file, should be opening in default text editor
 
-}
+} catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
     public void informationUser(String information){
         Alert info = new Alert(Alert.AlertType.INFORMATION);

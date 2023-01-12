@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.Properties;
 
 public class DatabaseConnector {
-    private static final String PROP_FILE = "Data/database.settings";
+    private static final String PROP_FILE = "TMAOMovieProject/Data/database.settings";
 
     private SQLServerDataSource dataSource;
 

@@ -56,4 +56,10 @@ public class MovieModel {
     public void updateMovieRating(Movie movie, double rating) throws Exception {
         movieManager.updateMovieRating(movie, rating);
     }
+
+    public void updateMovieLastview(Movie updateMovieLastview) throws Exception
+    {
+        movieManager.updateMovieLastview(updateMovieLastview);
+    }
+
 }
